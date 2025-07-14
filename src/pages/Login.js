@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 0, display: 'flex', height: 'calc(100vh - 64px)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
       <Paper sx={{ p: 3, maxWidth: 400, mx: 'auto' }}>
         <Typography variant="h5" gutterBottom>Login</Typography>
         <form onSubmit={handleSubmit}>

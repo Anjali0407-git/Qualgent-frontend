@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 const NavBar = () => (
   <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
     <Toolbar>
-      <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 'bold', letterSpacing: 1 }}>
-        QualGent
+      <Typography variant="h6" noWrap>
+        Qualgent Platform
       </Typography>
     </Toolbar>
   </AppBar>
