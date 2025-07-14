@@ -27,6 +27,25 @@ export default function TestCaseListPanel() {
   const token = localStorage.getItem("token");
   const API = process.env.REACT_APP_API_URL;
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searching, setSearching] = useState(false);
+
+  const handleSearch = async () => {
+    setSearching(true);
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/testcases/search`,
+        { query: searchQuery },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTestCases(res.data);
+    } catch (err) {
+      console.error("Search failed", err);
+    } finally {
+      setSearching(false);
+    }
+  };
+
   // Fetch test cases list
   const fetchTestCases = async () => {
     setLoading(true);
@@ -78,6 +97,21 @@ export default function TestCaseListPanel() {
           </Button>
         </Box>
 
+        <Box sx={{ mb: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
+          <input
+            type="text"
+            value={searchQuery}
+            placeholder="Search test cases in natural language. Eg: tests of 'unit-test' category"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ flex: 1, padding: '8px' }}
+          />
+          <Button variant="contained" onClick={handleSearch} disabled={searching || !searchQuery.trim()}>
+            Search
+          </Button>
+          <Button variant="outlined" onClick={() => { setSearchQuery(''); fetchTestCases(); }}>
+            Reset
+          </Button>
+        </Box>
         {loading ? (
           <CircularProgress />
         ) : (
