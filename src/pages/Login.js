@@ -23,6 +23,8 @@ const Login = () => {
     }
   };
 
+   const handleSwitchToSignup = () => navigate('/signup');
+
   return (
     <Box sx={{ p: 0, display: 'flex', height: 'calc(100vh - 64px)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
       <Paper sx={{ p: 3, maxWidth: 400, mx: 'auto' }}>
@@ -52,6 +54,14 @@ const Login = () => {
             Login
           </Button>
         </form>
+        <Button
+          onClick={handleSwitchToSignup}
+          color="secondary"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          Don't have an account? Sign UP
+        </Button>
       </Paper>
     </Box>
   );

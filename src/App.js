@@ -28,7 +28,7 @@ export default function App() {
               xs={2}
               sx={{
                 bgcolor: 'white',
-                borderRight: 1,
+                borderRight: 2,
                 borderColor: 'divider',
                 overflowY: 'auto',
                 zIndex: 1100,
@@ -41,7 +41,7 @@ export default function App() {
           <Grid
             item
             xs={isAuthenticated() ? 10 : 12}
-            sx={{display: 'flex', flex: 1 }}
+            sx={{display: 'flex', flex: 1, bgcolor: 'white'  }}
           >
             <Routes>
               <Route path="/login" element={isAuthenticated() ? <Navigate to="/" /> : <Login />} />

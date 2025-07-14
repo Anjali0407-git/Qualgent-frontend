@@ -7,7 +7,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UploadIcon from "@mui/icons-material/Upload";
 import CancelIcon from "@mui/icons-material/Cancel";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import DownloadIcon from "@mui/icons-material/Download";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -127,7 +126,7 @@ export default function Files() {
     };
 
   return (
-    <Box sx={{ p: 4, background: 'transparent'}}>
+    <Box sx={{ p: 4, bgcolor: 'white', height: '100%' }}>
       <Typography variant="h5" gutterBottom>
         Files
       </Typography>
