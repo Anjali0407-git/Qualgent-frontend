@@ -5,7 +5,7 @@ import SideBar from './components/SideBar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import TestCases from './pages/TestCases';
-import RunView from './pages/RunView';
+import RunTestCases from './pages/RunTestCases';
 import Files from './pages/Files';
 import Queue from './pages/Queue';
 import Box from '@mui/material/Box';
@@ -19,8 +19,8 @@ export default function App() {
   return (
     <Router>
       <NavBar />
-      {/* Push content below NavBar */}
-      <Box sx={{ pt: '64px', bgcolor: '#f6f7fb', maxHeight: 'calc(100vh - 64px)', display: 'flex', flex: 1 }}>
+      
+      <Box sx={{ pt: '64px', bgcolor: '#f6f7fb', height: 'calc(100% - 64px)', display: 'flex', flex: 1 }}>
         <Grid container sx={{display: 'flex', flex: 1}}>
           {isAuthenticated() && (
             <Grid
@@ -41,14 +41,14 @@ export default function App() {
           <Grid
             item
             xs={isAuthenticated() ? 10 : 12}
-            sx={{display: 'flex', flex: 1, bgcolor: 'white'  }}
+            sx={{display: 'flex', flex: 1, bgcolor: 'white',maxHeight: 'calc(100vh - 64px)',  }}
           >
             <Routes>
               <Route path="/login" element={isAuthenticated() ? <Navigate to="/" /> : <Login />} />
               <Route path="/signup" element={isAuthenticated() ? <Navigate to="/" /> : <Signup />} />
               <Route path="/" element={<PrivateRoute><TestCases /></PrivateRoute>} />
               <Route path="/test-cases" element={<PrivateRoute><TestCases /></PrivateRoute>} />
-              <Route path="/run-view" element={<PrivateRoute><RunView /></PrivateRoute>} />
+              <Route path="/run-test-cases" element={<PrivateRoute><RunTestCases /></PrivateRoute>} />
               <Route path="/files" element={<PrivateRoute><Files /></PrivateRoute>} />
               <Route path="/queue" element={<PrivateRoute><Queue /></PrivateRoute>} />
               <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/login"} />} />

@@ -12,17 +12,15 @@ import {
   CircularProgress,
   Tooltip,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import axios from "axios";
-import TestCaseFormPanel from "./TestCaseFormPanel";
+import TestCaseStatusPanel from "../components/TestCaseStatusPanel";
 
-export default function TestCaseListPanel() {
+export default function RunTestCases() {
   const [testCases, setTestCases] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editingTestCase, setEditingTestCase] = useState(null);
+  const [runTestCase, setRunTestCase] = useState(null);
 
   const token = localStorage.getItem("token");
   const API = process.env.REACT_APP_API_URL;
@@ -65,35 +63,11 @@ export default function TestCaseListPanel() {
     fetchTestCases();
   }, []);
 
-  // const editingTestCase = testCases.find((tc) => tc._id === editId) || null;
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("Delete this test case?")) return;
-
-    try {
-      await axios.delete(`${API}/api/testcases/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTestCases((prev) => prev.filter((tc) => tc._id !== id));
-    } catch (err) {
-      console.error("Failed to delete test case", err);
-    }
-  };
-
   return (
-    <Box sx={{ flex: 1, overflowX: "auto", display: "flex" }}>
-      <Box sx={{ flex: 1, p: 5 }}>
+    <Box sx={{ flex: 1, display: "flex"}}>
+      <Box sx={{ p: 5, overflowX: "auto", maxWidth: runTestCase ? "25vw" : "100%", flex: 1 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-          <Typography variant="h6">Test Cases</Typography>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={() => {
-              setShowForm(true);
-            }}
-          >
-            + New
-          </Button>
+          <Typography variant="h6">Run Test Cases</Typography>
         </Box>
 
         <Box sx={{ mb: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
@@ -111,7 +85,6 @@ export default function TestCaseListPanel() {
             Reset
           </Button>
         </Box>
-        
         {loading ? (
           <CircularProgress />
         ) : (
@@ -157,21 +130,15 @@ export default function TestCaseListPanel() {
                         {new Date(tc.updatedAt || tc.createdAt).toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        <IconButton
-                          size="small"
-                          onClick={() => {
-                            setEditingTestCase(tc);
-                            setShowForm(true);
-                          }}
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton
-                          size="small"
-                          onClick={() => handleDelete(tc._id)}
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
+                        <Tooltip title="Run Test Case">
+                          <IconButton
+                            size="small"
+                            onClick={() => setRunTestCase(tc)}
+                            color="primary"
+                          >
+                            <PlayArrowIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
                       </TableCell>
                     </TableRow>
                   );
@@ -180,16 +147,10 @@ export default function TestCaseListPanel() {
           </Table>
         )}
       </Box>
-
-      {/* Form Panel */}
-      {showForm && (
-        <TestCaseFormPanel
-          editTestCase={editingTestCase}
-          onClose={() => setShowForm(false)}
-          onSaved={() => {
-            setShowForm(false);
-            fetchTestCases();
-          }}
+      {runTestCase && (
+        <TestCaseStatusPanel
+          testCase={runTestCase}
+          onClose={() => setRunTestCase(null)}
         />
       )}
     </Box>

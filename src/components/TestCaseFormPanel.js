@@ -26,6 +26,16 @@ export default function TestCaseFormPanel({ editTestCase, onClose, onSaved }) {
     ...editTestCase,
   });
 
+  useEffect(() => {
+    setForm({
+      name: "",
+      description: "",
+      category: "",
+      files: [],
+      ...editTestCase,
+    });
+  }, [editTestCase]);
+
   const [categories, setCategories] = useState([]);
   const [loadingCats, setLoadingCats] = useState(true);
   const [files, setFiles] = useState([]);
@@ -113,7 +123,7 @@ export default function TestCaseFormPanel({ editTestCase, onClose, onSaved }) {
   };
 
   return (
-    <Paper sx={{ width: 480, p: 2, ml: 4, mr: 0, boxShadow: 3, ml: 1, position: "relative", overflowY: "auto", maxHeight: '90vh' }}>
+    <Paper sx={{ width: '30vw', p: 4, ml: 4, mr: 0, boxShadow: 3, ml: 1, position: "relative", overflowY: "auto", maxHeight: '90vh' }}>
       <Typography variant="h6" gutterBottom>
         {editTestCase ? "Edit Test Case" : "Create Test Case"}
       </Typography>
@@ -169,7 +179,7 @@ export default function TestCaseFormPanel({ editTestCase, onClose, onSaved }) {
               No files available.
             </Typography>
           ) : (
-            <FormGroup sx={{ maxHeight: 180, overflowY: "auto", border: "1px solid #ddd", borderRadius: 1, p: 1 }}>
+            <FormGroup sx={{ maxHeight: '50vh', overflowY: "auto", border: "1px solid #ddd", borderRadius: 1, p: 1 }}>
               {files.map((file) => (
                 <FormControlLabel
                   key={file._id}
